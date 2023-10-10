@@ -17,6 +17,29 @@ iniExpNum: num titular: unTitular fecha: unaFecha tipo: unTipo estado: unEstado
 	tipoExp := unTipo.
 	estado := unEstado!
 
+modEstado:otroEstado
+
+estado:=otroEstado.!
+
+modFechadia:otrodia mes:otroMes anio:otroAnio
+
+|newDate|
+
+newDate:=Date year: otroAnio month: otroMes day: otrodia.
+
+fechaPresen:=newDate.
+
+
+!
+
+modNumero:otroNum
+
+numero:=otroNum.!
+
+modTitular:otroTit
+
+titular:=otroTit.!
+
 verEstado
 
 ^estado!
@@ -37,6 +60,10 @@ verTitular
 	^titular! !
 !Expediente categoriesForMethods!
 iniExpNum:titular:fecha:tipo:estado:!public! !
+modEstado:!public! !
+modFechadia:mes:anio:!public! !
+modNumero:!public! !
+modTitular:!public! !
 verEstado!public! !
 verFechaPresen!public! !
 verNumero!public! !
