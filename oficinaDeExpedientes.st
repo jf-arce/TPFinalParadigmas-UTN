@@ -1,6 +1,10 @@
 ﻿oficina := Oficina crearOficina: 'Oficina Bala'.
 
 op:=1.
+expPruebaCivil:= Civil crearExpCivilNum:1 titular: 'Gomez' fecha: '4/10/2023' estado: 'activo' tipoExp: 1 tipoCaso: 'divorcio' inter: 'individuo'.
+oficina agregarExp: expPruebaCivil.
+expPruebaPenal:= Penal crearExpPenalNum: 2 titular: 'Altamirano' fecha: '12/8/2023' estado: 'activo' tipoExp: 2 acusado: 'German' acusacion: 'Robo' pruebasPres: 'pruebas' test: 'nose'.
+oficina agregarExp:  expPruebaPenal.
 
 [op ~= 0] whileTrue: [
     opMenu := (Prompter prompt:  '**** Menu ****
@@ -44,7 +48,6 @@ Elija una opcion:
 	].
 
 	"Modificar los detalles de un expediente existente"
-	
 	[opMenu == 2] whileTrue:[
 	
 		exp_num:= (Prompter prompt: 'Ingrese el numero del expediente a buscar: ') asNumber.
@@ -53,10 +56,44 @@ Elija una opcion:
 
 		exp_rec:= collexp detect:[:expediente | expediente verNumero = exp_num] ifNone:[^nil].
 
-			(exp_rec ~= nil) ifTrue: [
-
-				opcion:= (Prompter prompt: 'Opciones a modificar: ,1. Modificar Estado//2.Modificar Fecha de presentación//3.Modificar Titular//4.Modificar Número//0.No modificar nada') asNumber.
-
+			exp_rec ~= nil & (exp_rec verTipoExp == 1) ifTrue: [
+				opcion:= (Prompter prompt: 'Opciones a modificar ExpCivil:,1. Modificar Estado//2.Modificar Fecha de presentación//3.Modificar Titular//4.Modificar Número//
+5.Modificar tipo de caso 6.Modificar interviniente 0.No modificar nada') asNumber.
+				(opcion == 5) ifTrue:[
+							otroTipoCaso:=Prompter prompt: 'Ingresar nuevo tipo de caso'.
+							exp_rec modTipoCaso: otroTipoCaso.
+							MessageBox notify: 'Tipo de caso modificado'.
+				].
+				(opcion == 6) ifTrue:[
+							otroInter:=Prompter prompt: 'Ingresar nuevo interviniente'.
+							exp_rec modInterviniente: otroInter .
+							MessageBox notify: 'Interviniente modificado'.
+				].
+			].
+			exp_rec ~= nil & (exp_rec verTipoExp == 2) ifTrue: [
+					opcion:= (Prompter prompt: 'Opciones a modificar ExpPenal: ,1. Modificar Estado//2.Modificar Fecha de presentación//3.Modificar Titular//4.Modificar Número//5.Acusado//6.Acusacion//7.PruebasPresentadas//8.Testimonios 0.No modificar nada') asNumber.
+				(opcion == 5) ifTrue:[
+							otroAcusado:=Prompter prompt: 'Ingresar nuevo acusado'.
+							exp_rec modAcusado: otroAcusado.
+							MessageBox notify: 'Acusado modificado'.
+				].
+				(opcion == 6) ifTrue:[
+							otraAcusacion:=Prompter prompt: 'Ingresar nueva acusacion'.
+							exp_rec modAcusacion: otraAcusacion .
+							MessageBox notify: 'Acusacion modificada'.
+				].
+				(opcion == 7) ifTrue:[
+							otrasPruebas:=Prompter prompt: 'Ingresar nuevas pruebas'.
+							exp_rec modPruebasPres: otrasPruebas .
+							MessageBox notify: 'Pruebas modificadas'.
+				].
+				(opcion == 8) ifTrue:[
+							otrosTest:=Prompter prompt: 'Ingresar nuevos testimonios'.
+							exp_rec modTestimonios: otrosTest .
+							MessageBox notify: 'Testimonios modificados'.
+				].
+					
+			].
 				(opcion == 1) ifTrue:[
 							otroEstado:=Prompter prompt: 'Ingresar nuevo estado'.
 							exp_rec modEstado: otroEstado.
@@ -74,19 +111,33 @@ Elija una opcion:
 							exp_rec modTitular: otroTit .
 							MessageBox notify: 'Titular modificado'.
 				].
-				(opcion == 1) ifTrue:[
+				(opcion == 4) ifTrue:[
 							otroNum:=Prompter prompt: 'Ingresar nuevo numero de expediente'.
 							exp_rec modNumero: otroNum .
 							MessageBox notify: 'Numero de expediente modificado'.
 				].
+
 				(opcion == 0) ifTrue: [
 								MessageBox notify: 'No se modifico nada' .
 				].
-
-			] ifFalse:[
-				MessageBox notify: 'No se encontro el expediente'.
-			].
+			
+			
 		opMenu:=(Prompter prompt: '2 --> Modificar otro expediente | 0 --> Volver al menu') asNumber.
+	].
+
+	"Eliminar un expediente de la colección"
+
+	[opMenu==3] whileTrue: [
+		exp_elim:=(Prompter prompt: 'Ingrese el numero de expediente a eliminar')asNumber.
+		collexp:= oficina verTodosExp.
+		exp_rec:= collexp detect:[:expediente | expediente verNumero = exp_elim] ifNone:[^nil].
+		(exp_rec ~= nil) ifTrue: [
+			oficina eliminarExp: exp_rec.
+			MessageBox notify: 'Expediente eliminado'.
+		] ifFalse:[
+			MessageBox notify: 'No se encontró el expediente'.
+		].
+		opMenu:=(Prompter prompt: '3 --> Eliminar otro expediente| 0 --> Volver al menu')asNumber.
 	].
 ].
 

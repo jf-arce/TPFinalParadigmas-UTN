@@ -14,6 +14,10 @@ agregarExp:unExp
 
 conjExp add:unExp!
 
+eliminarExp:unExp
+
+conjExp remove: unExp.!
+
 initOficina:unNom
 
 nombre:=unNom.
@@ -33,6 +37,7 @@ verTodosExp
 ^conjExp! !
 !Oficina categoriesForMethods!
 agregarExp:!public! !
+eliminarExp:!public! !
 initOficina:!public! !
 modNombre:!public! !
 verNombre!public! !

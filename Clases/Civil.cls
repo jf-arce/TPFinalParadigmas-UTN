@@ -19,6 +19,14 @@ iniExpCivilNum: num titular: unTitular fecha: unaFecha estado: unEstado tipoExp:
 	tipoCaso := unCaso.
 	inter := unInterviniente!
 
+modInterviniente:otroInter
+
+inter:=otroInter.!
+
+modTipoCaso:otroTipoCaso
+
+tipoCaso:=otroTipoCaso.!
+
 verInterviniente
 
 ^inter.!
@@ -28,6 +36,8 @@ verTipoCaso
 ^tipoCaso.! !
 !Civil categoriesForMethods!
 iniExpCivilNum:titular:fecha:estado:tipoExp:tipoCaso:inter:!public! !
+modInterviniente:!public! !
+modTipoCaso:!public! !
 verInterviniente!public! !
 verTipoCaso!public! !
 !

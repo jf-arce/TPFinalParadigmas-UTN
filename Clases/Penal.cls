@@ -22,6 +22,22 @@ iniExpPenalNum: num titular: unTitular fecha: unaFecha estado: unEstado tipoExp:
 	pruebasPres := unaPrueba.
 	testimonios := unTest!
 
+modAcusacion:otraAcusacion
+
+acusacion:=otraAcusacion.!
+
+modAcusado:otroAcusado
+
+acusado:=otroAcusado.!
+
+modPruebasPres:otrasPruebas
+
+pruebasPres:=otrasPruebas.!
+
+modTestimonios:otrosTest
+
+testimonios:=otrosTest.!
+
 verAcusacion
 
 ^acusacion.!
@@ -38,6 +54,10 @@ verTestimonios
 ^testimonios.! !
 !Penal categoriesForMethods!
 iniExpPenalNum:titular:fecha:estado:tipoExp:acusado:acusacion:pruebasPres:test:!public! !
+modAcusacion:!public! !
+modAcusado:!public! !
+modPruebasPres:!public! !
+modTestimonios:!public! !
 verAcusacion!public! !
 verAcusado!public! !
 verPruebasPres!public! !
