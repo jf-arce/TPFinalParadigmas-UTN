@@ -5,16 +5,37 @@ expPruebaCivil:= Civil crearExpCivilNum:1 titular: 'Gomez' fecha: '4/10/2023' es
 oficina agregarExp: expPruebaCivil.
 expPruebaPenal:= Penal crearExpPenalNum: 2 titular: 'Altamirano' fecha: '12/8/2023' estado: 'activo' tipoExp: 2 acusado: 'German' acusacion: 'Robo' pruebasPres: 'pruebas' test: 'nose'.
 oficina agregarExp:  expPruebaPenal.
+expPruebaPenalCoppola:= Penal crearExpPenalNum: 4 titular: 'Sofia Coppola' fecha: '12/8/2023' estado: 'activo' tipoExp: 2 acusado: 'German' acusacion: 'Robo' pruebasPres: 'pruebas' test: 'nose'.
+oficina agregarExp:  expPruebaPenalCoppola.
+expPruebaPenalCoppola2:= Penal crearExpPenalNum: 4 titular: 'Sofia Coppola' fecha: '12/8/2023' estado: 'activo' tipoExp: 2 acusado: 'German' acusacion: 'Robo' pruebasPres: 'pruebas' test: 'nose'.
+oficina agregarExp:  expPruebaPenalCoppola2.
+
+"Define un diccionario que asocia nombres legibles con valores numéricos"
+"opciones:=Dictionary new at:'1-Registrar Expediente' put: 1;
+				at: '2-Modificar Expediente' put: 2;
+				at: '3- Eliminar Expediente' put: 3;
+				at: '4- Listar Expedientes' put: 4;
+				at: '5- Eliminar expedientes penales de Sofia Coppola' put: 5;
+				yourself.
+opciones inspect.
+op1:=opciones keyAtValue: 1."
 
 [op ~= 0] whileTrue: [
-    opMenu := (Prompter prompt:  '**** Menu ****
+	"menu:= OrderedCollection new.
+	menu add: op1.
+	menu add: 0."
+	menu:= #(1 2 3 4 5 6 0).
+	opMenu:=ChoicePrompter choices: menu.
+	
+	"opMenu := 
+    opMenu := (ChoicePrompter choices: '**** Menu ****
 Elija una opcion:
 1 --> Registrar Expediente
 2 --> Modificar Expediente
 3 --> Eliminar Expediente
 4 --> Listar Expedientes 
 5 --> Eliminar expedientes penales
-0 --> Salir del menu') asNumber.
+0 --> Salir del menu') asNumber."
 
 	(opMenu == 0) ifTrue: [
 		op := 0.
@@ -138,6 +159,33 @@ Elija una opcion:
 			MessageBox notify: 'No se encontró el expediente'.
 		].
 		opMenu:=(Prompter prompt: '3 --> Eliminar otro expediente| 0 --> Volver al menu')asNumber.
+	].
+	
+	[opMenu == 5] whileTrue: [ 
+		collExp:= oficina verTodosExp.
+		exp:= collExp select: [:exp | exp verTipoExp = 2 & (exp verTitular = 'Sofia Coppola')].
+
+		opcion:= MessageBox confirm: '¿Desea eliminar el los espedientes de Sofia Coppola?1.Si/2.No'.
+		(opcion == true ) ifTrue: [
+			exp do: [:expSofia | 
+				oficina eliminarExp: expSofia.
+			].
+			MessageBox notify:'Los expedientes de Sofia Coppola fueron eliminados'.
+		]
+		ifFalse: [MessageBox notify: 'No contiene expedientes de esa abogada'].
+		opMenu:=0.
+	].
+	[ opMenu == 6 ] whileTrue: [
+		collExp:= oficina verTodosExp.
+	
+		expRecCliente:= collExp collect: [:exp | exp verTitular].
+		titularesSinRepetir:=(expRecCliente asSet) asOrderedCollection .
+		titularElegido:= ChoicePrompter choices: titularesSinRepetir.
+	
+		expTitular:=collExp select: [:exp | exp verTitular = titularElegido].
+		"Falta imprimir los atributos de los expedientes encontrados del titular"
+		
+		opMenu:=(Prompter prompt: '6 --> Buscar otros expedientes | 0 --> Volver al menu')asNumber.
 	].
 ].
 
