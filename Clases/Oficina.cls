@@ -28,6 +28,30 @@ modNombre:otroNombre
 
 nombre:=otroNombre!
 
+mostrarExp:colExp
+
+colExp do: [:exp | 
+	Transcript show: 'Nombre del cliente: ', exp verNombreRazonCliente ;cr.
+	Transcript show: 'Numero del cliente: ', (exp verNumCliente) printString ;cr.
+	Transcript show: 'Dni/Cuit del cliente: ', (exp verDniCuitCliente) printString ;cr.
+	Transcript show: 'Numero de expediente: ', (exp verNumero) printString ;cr.
+	Transcript show: 'Titular: ', exp  verTitular;cr.
+	Transcript show: 'Fecha de presentacion: ',(exp verFechaPresen) printString ; cr.
+	Transcript show: 'Estado: ',exp verEstado; cr.
+	(exp verTipoExp == 1) ifTrue: [
+		Transcript show: 'Tipo de caso: ', (exp verTipoCaso) printString;cr.
+		Transcript show: 'Interviniente: ',exp verInterviniente;cr.
+		Transcript show: '-------------------------------------';cr.
+	]. 
+	(exp verTipoExp == 2) ifTrue:[
+		Transcript show: 'Acusado: ',exp verAcusado ; cr.
+		Transcript show: 'Acusacion: ',exp verAcusacion ; cr.
+		Transcript show: 'Pruebas presentadas: ',exp verPruebasPres ; cr.
+		Transcript show: 'Testimonios: ',exp verTestimonios ; cr.
+		Transcript show: '-------------------------------------';cr.
+	].	
+]!
+
 verNombre
 
 ^nombre!
@@ -40,6 +64,7 @@ agregarExp:!public! !
 eliminarExp:!public! !
 initOficina:!public! !
 modNombre:!public! !
+mostrarExp:!public! !
 verNombre!public! !
 verTodosExp!public! !
 !

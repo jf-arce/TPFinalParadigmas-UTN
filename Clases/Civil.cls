@@ -10,7 +10,8 @@ Civil comment: ''!
 !Civil categoriesForClass!Kernel-Objects! !
 !Civil methodsFor!
 
-iniExpCivilNum: num titular: unTitular fecha: unaFecha estado: unEstado tipoExp: unTipoExp tipoCaso: unCaso inter: unInterviniente
+iniExpCivilNum: num titular: unTitular fecha: unaFecha estado: unEstado tipoExp: unTipoExp tipoCaso: unCaso inter: unInterviniente cliente:unCliente
+	cliente:=unCliente.
 	numero := num.
 	titular := unTitular.
 	fechaPresen := unaFecha.
@@ -35,7 +36,7 @@ verTipoCaso
 
 ^tipoCaso.! !
 !Civil categoriesForMethods!
-iniExpCivilNum:titular:fecha:estado:tipoExp:tipoCaso:inter:!public! !
+iniExpCivilNum:titular:fecha:estado:tipoExp:tipoCaso:inter:cliente:!public! !
 modInterviniente:!public! !
 modTipoCaso:!public! !
 verInterviniente!public! !
@@ -44,11 +45,11 @@ verTipoCaso!public! !
 
 !Civil class methodsFor!
 
-crearExpCivilNum: num titular: unTitular fecha: unaFecha estado: unEstado tipoExp: unTipoExp tipoCaso: unCaso inter: unInterviniente
+crearExpCivilNum: num titular: unTitular fecha: unaFecha estado: unEstado tipoExp: unTipoExp tipoCaso: unCaso inter: unInterviniente cliente:unCliente
 
-^self new iniExpCivilNum: num titular: unTitular fecha: unaFecha estado: unEstado tipoExp: unTipoExp tipoCaso: unCaso inter: unInterviniente
+^self new iniExpCivilNum: num titular: unTitular fecha: unaFecha estado: unEstado tipoExp: unTipoExp tipoCaso: unCaso inter: unInterviniente cliente: unCliente
 ! !
 !Civil class categoriesForMethods!
-crearExpCivilNum:titular:fecha:estado:tipoExp:tipoCaso:inter:!public! !
+crearExpCivilNum:titular:fecha:estado:tipoExp:tipoCaso:inter:cliente:!public! !
 !
 

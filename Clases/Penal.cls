@@ -10,8 +10,9 @@ Penal comment: ''!
 !Penal categoriesForClass!Kernel-Objects! !
 !Penal methodsFor!
 
-iniExpPenalNum: num titular: unTitular fecha: unaFecha estado: unEstado tipoExp: unTipoExp acusado: unAcusado acusacion: unaAcusacion pruebasPres: unaPrueba test: unTest
-
+iniExpPenalNum: num titular: unTitular fecha: unaFecha estado: unEstado tipoExp: unTipoExp acusado: unAcusado acusacion: unaAcusacion pruebasPres: unaPrueba test: unTest cliente:unCliente
+	
+	cliente:= unCliente.
 	numero := num.
 	titular := unTitular .
 	fechaPresen := unaFecha.
@@ -53,7 +54,7 @@ verTestimonios
 
 ^testimonios.! !
 !Penal categoriesForMethods!
-iniExpPenalNum:titular:fecha:estado:tipoExp:acusado:acusacion:pruebasPres:test:!public! !
+iniExpPenalNum:titular:fecha:estado:tipoExp:acusado:acusacion:pruebasPres:test:cliente:!public! !
 modAcusacion:!public! !
 modAcusado:!public! !
 modPruebasPres:!public! !
@@ -66,10 +67,10 @@ verTestimonios!public! !
 
 !Penal class methodsFor!
 
-crearExpPenalNum: num titular: unTitular fecha: unaFecha estado: unEstado tipoExp: unTipoExp acusado: unAcusado acusacion: unaAcusacion pruebasPres: unaPrueba test: unTest
+crearExpPenalNum: num titular: unTitular fecha: unaFecha estado: unEstado tipoExp: unTipoExp acusado: unAcusado acusacion: unaAcusacion pruebasPres: unaPrueba test: unTest cliente:unCliente
 
-^self new iniExpPenalNum: num titular: unTitular fecha: unaFecha estado: unEstado tipoExp: unTipoExp acusado: unAcusado acusacion: unaAcusacion pruebasPres: unaPrueba test: unTest! !
+^self new iniExpPenalNum: num titular: unTitular fecha: unaFecha estado: unEstado tipoExp: unTipoExp acusado: unAcusado acusacion: unaAcusacion pruebasPres: unaPrueba test: unTest cliente: unCliente! !
 !Penal class categoriesForMethods!
-crearExpPenalNum:titular:fecha:estado:tipoExp:acusado:acusacion:pruebasPres:test:!public! !
+crearExpPenalNum:titular:fecha:estado:tipoExp:acusado:acusacion:pruebasPres:test:cliente:!public! !
 !
 

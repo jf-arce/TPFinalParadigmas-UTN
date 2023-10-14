@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #Expediente
-	instanceVariableNames: 'numero titular fechaPresen estado tipoExp'
+	instanceVariableNames: 'numero titular fechaPresen estado tipoExp cliente'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -40,6 +40,10 @@ modTitular:otroTit
 
 titular:=otroTit.!
 
+verDniCuitCliente
+
+^cliente verDniCuit!
+
 verEstado
 
 ^estado!
@@ -47,6 +51,14 @@ verEstado
 verFechaPresen
 
 ^fechaPresen!
+
+verNombreRazonCliente
+
+^cliente verNombreRazon!
+
+verNumCliente
+
+^cliente verNum!
 
 verNumero
 
@@ -64,8 +76,11 @@ modEstado:!public! !
 modFechadia:mes:anio:!public! !
 modNumero:!public! !
 modTitular:!public! !
+verDniCuitCliente!public! !
 verEstado!public! !
 verFechaPresen!public! !
+verNombreRazonCliente!public! !
+verNumCliente!public! !
 verNumero!public! !
 verTipoExp!public! !
 verTitular!public! !
