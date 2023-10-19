@@ -21,9 +21,17 @@ funcionOpcion1:=[
 	
 	(exp_rep = nil) ifTrue: [
 		numCliente:= (Prompter prompt: 'Ingresar numero del cliente') asNumber.
-		dniCuit:=(Prompter prompt: 'Ingresar dni o cuit del cliente') asNumber.
-		nombreRazon:=Prompter prompt: 'Ingresar nombre o razon social'.
-		cliente:= Cliente crearClienteNum: numCliente con: dniCuit con: nombreRazon.
+		expRec:= collExp detect: [:exp | exp verNumCliente = numCliente ] ifNone: [nil].
+		(expRec = nil) ifTrue: [
+			dniCuit:=(Prompter prompt: 'Ingresar dni o cuit del cliente') asNumber.
+			nombreRazon:=Prompter prompt: 'Ingresar nombre o razon social'.
+			cliente:= Cliente crearClienteNum: numCliente con: dniCuit con: nombreRazon.
+		]ifFalse:[
+			dniCuit:= expRec verDniCuitCliente.
+			nombreRazon:= expRec verNombreRazonCliente.
+			cliente:= Cliente crearClienteNum: numCliente con: dniCuit  con: nombreRazon.
+			MessageBox notify: 'El cliente ya existe, y fue cargado con sus respectivos datos'.
+		].
 		num:= (Prompter prompt: 'Ingresar numero de expediente') asNumber.
 		titular:= (Prompter prompt: 'Ingresar titular del expediente') asLowercase.
 		day:=(Prompter prompt: 'Ingresar dia') asNumber.
@@ -60,90 +68,93 @@ funcionOpcion2:=[
 	]ifFalse: [	
 		exp_num:= (Prompter prompt: 'Ingrese el numero del expediente a buscar: ') asNumber.
 		exp_rec:= collexp detect:[:expediente | expediente verNumero = exp_num] ifNone: [nil].
+		(exp_rec ~= nil ) ifTrue:[
+			(exp_rec verTipoExp == 1) ifTrue: [
+				Transcript show: '--- Modificar Expediente Civil N° ', exp_num printString,' ---';cr;cr.
+				Transcript show: 'Ingrese una opcion para modificar:';cr.
+				Transcript show: '1 - Modificar Estado';cr.
+				Transcript show: '2 - Modificar Fecha de presentacion';cr.
+				Transcript show: '3 - Modificar Titular';cr.
+				Transcript show: '4 - Modificar Numero';cr.
+				Transcript show: '5 - Modificar Tipo de caso';cr.
+				Transcript show: '6 - Modificar Interviniente';cr.
+				Transcript show: '0 - No modificar nada';cr.
+				opcion:= ChoicePrompter choices: #(1 2 3 4 5 6 0).
 
-		exp_rec ~= nil & (exp_rec verTipoExp == 1) ifTrue: [
-			Transcript show: '--- Modificar Expediente Civil N° ', exp_num printString,' ---';cr;cr.
-			Transcript show: 'Ingrese una opcion para modificar:';cr.
-			Transcript show: '1 - Modificar Estado';cr.
-			Transcript show: '2 - Modificar Fecha de presentacion';cr.
-			Transcript show: '3 - Modificar Titular';cr.
-			Transcript show: '4 - Modificar Numero';cr.
-			Transcript show: '5 - Modificar Tipo de caso';cr.
-			Transcript show: '6 - Modificar Interviniente';cr.
-			Transcript show: '0 - No modificar nada';cr.
-			opcion:= ChoicePrompter choices: #(1 2 3 4 5 6 7 0).
+				(opcion == 5) ifTrue:[
+				otroTipoCaso:=Prompter prompt: 'Ingresar nuevo tipo de caso'.
+				exp_rec modTipoCaso: otroTipoCaso.
+				MessageBox notify: 'Tipo de caso modificado'.
+				].
+				(opcion == 6) ifTrue:[
+				otroInter:=ChoicePrompter choices: #('Individuo' 'Empresa' 'Organizacion').
+				exp_rec modInterviniente: otroInter .
+				MessageBox notify: 'Interviniente modificado'.
+				].
+			].
+			(exp_rec verTipoExp == 2) ifTrue: [
+				Transcript show: '--- Modificar Expediente Penal N° ', exp_num printString,' ---';cr;cr.
+				Transcript show: 'Ingrese una opcion para modificar:';cr.
+				Transcript show: '1 - Modificar Estado';cr.
+				Transcript show: '2 - Modificar Fecha de presentacion';cr.
+				Transcript show: '3 - Modificar Titular';cr.
+				Transcript show: '4 - Modificar Numero';cr.
+				Transcript show: '5 - Modificar Acusado';cr.
+				Transcript show: '6 - Modificar Acusacion';cr.
+				Transcript show: '7 - Modificar Pruebas presentadas';cr.
+				Transcript show: '8 - Modificar Testimonios';cr.
+				Transcript show: '0 - No modificar nada';cr.
+			opcion:= ChoicePrompter choices: #(1 2 3 4 5 6 7 8 0).
 
 			(opcion == 5) ifTrue:[
-			otroTipoCaso:=Prompter prompt: 'Ingresar nuevo tipo de caso'.
-			exp_rec modTipoCaso: otroTipoCaso.
-			MessageBox notify: 'Tipo de caso modificado'.
+				otroAcusado:=Prompter prompt: 'Ingresar nuevo acusado'.
+				exp_rec modAcusado: otroAcusado.
+				MessageBox notify: 'Acusado modificado'.
 			].
 			(opcion == 6) ifTrue:[
-			otroInter:=ChoicePrompter choices: #('Individuo' 'Empresa' 'Organizacion').
-			exp_rec modInterviniente: otroInter .
-			MessageBox notify: 'Interviniente modificado'.
+				otraAcusacion:=Prompter prompt: 'Ingresar nueva acusacion'.
+				exp_rec modAcusacion: otraAcusacion .
+				MessageBox notify: 'Acusacion modificada'.
 			].
-		].
-		exp_rec ~= nil & (exp_rec verTipoExp == 2) ifTrue: [
-			Transcript show: '--- Modificar Expediente Penal N° ', exp_num printString,' ---';cr;cr.
-			Transcript show: 'Ingrese una opcion para modificar:';cr.
-			Transcript show: '1 - Modificar Estado';cr.
-			Transcript show: '2 - Modificar Fecha de presentacion';cr.
-			Transcript show: '3 - Modificar Titular';cr.
-			Transcript show: '4 - Modificar Numero';cr.
-			Transcript show: '5 - Modificar Acusado';cr.
-			Transcript show: '6 - Modificar Acusacion';cr.
-			Transcript show: '7 - Modificar Pruebas presentadas';cr.
-			Transcript show: '8 - Modificar Testimonios';cr.
-			Transcript show: '0 - No modificar nada';cr.
-		opcion:= ChoicePrompter choices: #(1 2 3 4 5 6 7 0).
+			(opcion == 7) ifTrue:[
+				otrasPruebas:=Prompter prompt: 'Ingresar nuevas pruebas'.
+				exp_rec modPruebasPres: otrasPruebas .
+				MessageBox notify: 'Pruebas modificadas'.
+			].
+				(opcion == 8) ifTrue:[
+				otrosTest:=Prompter prompt: 'Ingresar nuevos testimonios'.
+				exp_rec modTestimonios: otrosTest .
+				MessageBox notify: 'Testimonios modificados'.
+					].	
+			].
+			(opcion == 1) ifTrue:[
+					otroEstado:= ChoicePrompter choices: #('activo' 'suspendido' 'cerrado').
+					exp_rec modEstado: otroEstado.
+					MessageBox notify: 'Estado modificado'.
+			].
+			(opcion == 2) ifTrue:[
+					otroDia:=(Prompter prompt: 'Ingresar nuevo dia') asNumber .
+					otroMes:= (Prompter prompt: 'Ingresar nuevo mes') asNumber .
+					otroAnio:= (Prompter prompt: 'Ingresar nuevo anio') asNumber .
+					exp_rec modFechadia: otroDia mes: otroMes anio: otroAnio.
+					MessageBox notify: 'Fecha de presentacion modificada'.
+			].
+			(opcion == 3) ifTrue:[
+					otroTit:=Prompter prompt: 'Ingresar nuevo titular'.
+					exp_rec modTitular: otroTit .
+					MessageBox notify: 'Titular modificado'.
+			].
+			(opcion == 4) ifTrue:[
+					otroNum:=Prompter prompt: 'Ingresar nuevo numero de expediente'.
+					exp_rec modNumero: otroNum .
+					MessageBox notify: 'Numero de expediente modificado'.
+			].
 
-		(opcion == 5) ifTrue:[
-			otroAcusado:=Prompter prompt: 'Ingresar nuevo acusado'.
-			exp_rec modAcusado: otroAcusado.
-			MessageBox notify: 'Acusado modificado'.
-		].
-		(opcion == 6) ifTrue:[
-			otraAcusacion:=Prompter prompt: 'Ingresar nueva acusacion'.
-			exp_rec modAcusacion: otraAcusacion .
-			MessageBox notify: 'Acusacion modificada'.
-		].
-		(opcion == 7) ifTrue:[
-			otrasPruebas:=Prompter prompt: 'Ingresar nuevas pruebas'.
-			exp_rec modPruebasPres: otrasPruebas .
-			MessageBox notify: 'Pruebas modificadas'.
-		].
-			(opcion == 8) ifTrue:[
-			otrosTest:=Prompter prompt: 'Ingresar nuevos testimonios'.
-			exp_rec modTestimonios: otrosTest .
-			MessageBox notify: 'Testimonios modificados'.
-				].	
-		].
-		(opcion == 1) ifTrue:[
-				otroEstado:= ChoicePrompter choices: #('activo' 'suspendido' 'cerrado').
-				exp_rec modEstado: otroEstado.
-				MessageBox notify: 'Estado modificado'.
-		].
-		(opcion == 2) ifTrue:[
-				otroDia:=(Prompter prompt: 'Ingresar nuevo dia') asNumber .
-				otroMes:= (Prompter prompt: 'Ingresar nuevo mes') asNumber .
-				otroAnio:= (Prompter prompt: 'Ingresar nuevo anio') asNumber .
-				exp_rec modFechadia: otroDia mes: otroMes anio: otroAnio.
-				MessageBox notify: 'Fecha de presentacion modificada'.
-		].
-		(opcion == 3) ifTrue:[
-				otroTit:=Prompter prompt: 'Ingresar nuevo titular'.
-				exp_rec modTitular: otroTit .
-				MessageBox notify: 'Titular modificado'.
-		].
-		(opcion == 4) ifTrue:[
-				otroNum:=Prompter prompt: 'Ingresar nuevo numero de expediente'.
-				exp_rec modNumero: otroNum .
-				MessageBox notify: 'Numero de expediente modificado'.
-		].
-
-		(opcion == 0) ifTrue: [
-					MessageBox notify: 'No se modifico nada' .
+			(opcion == 0) ifTrue: [
+						MessageBox notify: 'No se modifico nada' .
+			].
+		]ifFalse:[
+			MessageBox notify: 'No se encontro ningun expediente con ese numero'.
 		].
 	].
 ].
