@@ -32,7 +32,6 @@ funcionOpcion1:=[
 			cliente:= Cliente crearClienteNum: numCliente con: dniCuit  con: nombreRazon.
 			MessageBox notify: 'El cliente ya existe, y fue cargado con sus respectivos datos'.
 		].
-		num:= (Prompter prompt: 'Ingresar numero de expediente') asNumber.
 		titular:= (Prompter prompt: 'Ingresar titular del expediente') asLowercase.
 		day:=(Prompter prompt: 'Ingresar dia') asNumber.
 		month:=(Prompter prompt: 'Ingresar mes') asNumber.
@@ -43,7 +42,7 @@ funcionOpcion1:=[
 		(tipoExp==1) ifTrue: [
 			tipoCaso:= Prompter prompt: 'Ingresar tipo de caso'.
 			interviniente:= ChoicePrompter choices: #('Individuo' 'Empresa' 'Organizacion').
-			civil := Civil crearExpCivilNum: num titular: titular fecha: date estado: estado tipoExp: tipoExp tipoCaso: tipoCaso inter: interviniente cliente: cliente.
+			civil := Civil crearExpCivilNum: num_exp titular: titular fecha: date estado: estado tipoExp: tipoExp tipoCaso: tipoCaso inter: interviniente cliente: cliente.
 			oficina agregarExp: civil.
 		].
 		(tipoExp==2) ifTrue: [
@@ -51,7 +50,7 @@ funcionOpcion1:=[
 			acusacion:= Prompter prompt: 'Ingresar acusacion'.
 			pruebasPres:=Prompter prompt: 'Ingresar pruebas presentadas'.
 			testimonios:=Prompter prompt: 'Ingresar testimonios'.
-			penal:= Penal crearExpPenalNum: num titular: titular fecha: date estado: estado tipoExp: tipoExp acusado: acusado acusacion: acusacion pruebasPres: pruebasPres test: testimonios cliente: cliente.
+			penal:= Penal crearExpPenalNum: num_exp titular: titular fecha: date estado: estado tipoExp: tipoExp acusado: acusado acusacion: acusacion pruebasPres: pruebasPres test: testimonios cliente: cliente.
 			oficina agregarExp: penal.
 		].
 	]ifFalse:[
@@ -145,11 +144,15 @@ funcionOpcion2:=[
 					MessageBox notify: 'Titular modificado'.
 			].
 			(opcion == 4) ifTrue:[
-					otroNum:=Prompter prompt: 'Ingresar nuevo numero de expediente'.
-					exp_rec modNumero: otroNum .
-					MessageBox notify: 'Numero de expediente modificado'.
+					otroNum:=(Prompter prompt: 'Ingresar nuevo numero de expediente') asNumber.
+					numeroExist:= collexp detect: [:exp | exp verNumero = otroNum ] ifNone: [nil].
+					(numeroExist ~= nil) ifTrue: [
+						MessageBox warning: 'El numero de expediente ya existe'.
+					]ifFalse:[
+						exp_rec modNumero: otroNum.
+						MessageBox notify: 'Numero de expediente modificado'.
+					].
 			].
-
 			(opcion == 0) ifTrue: [
 						MessageBox notify: 'No se modifico nada' .
 			].
