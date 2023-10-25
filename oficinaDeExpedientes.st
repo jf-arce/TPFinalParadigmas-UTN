@@ -1,7 +1,7 @@
 ﻿oficina := Oficina crearOficina: 'Oficina Bala'.
 Transcript clear.
-cliente:= Cliente crearClienteNum: 8 con: 43256891 con: 'Joaco'.
-cliente2:= Cliente crearClienteNum: 10 con: 43251473 con: 'German'.
+cliente:= Cliente crearClienteNum: 8 con: 43256891 con: 'Martin'.
+cliente2:= Cliente crearClienteNum: 10 con: 43251473 con: 'Juan'.
 expPruebaCivil3:= Civil crearExpCivilNum:1 titular: 'Gomez' fecha: '4/10/2023' estado: 'activo' tipoExp: 1 tipoCaso: 'divorcio' inter: 'individuo' cliente: cliente.
 oficina agregarExp: expPruebaCivil3.
 expPruebaCivil:= Civil crearExpCivilNum:1 titular: 'Altamirano' fecha: '4/10/2023' estado: 'activo' tipoExp: 1 tipoCaso: 'divorcio' inter: 'individuo' cliente: cliente.
@@ -168,8 +168,8 @@ funcionOpcion3:=[
 	(collexp isEmpty)ifTrue: [ 
 		MessageBox notify: 'No hay expedientes cargados'.
 	]ifFalse:[
-		exp_elim:=(Prompter prompt: 'Ingrese el numero de expediente a eliminar')asNumber.
-		exp_rec:= collexp detect:[:expediente | expediente verNumero = exp_elim] ifNone:[^nil].
+		exp_elim:=(Prompter prompt: 'Ingrese el numero de expediente a eliminar') asNumber.
+		exp_rec:= collexp detect:[:expediente | expediente verNumero = exp_elim] ifNone:[nil].
 		(exp_rec ~= nil) ifTrue: [
 			oficina eliminarExp: exp_rec.
 			MessageBox notify: 'Expediente eliminado'.
@@ -220,11 +220,15 @@ funcionOpcion6:=[
 	numCliente:=(Prompter prompt: 'Ingresar numero de cliente') asNumber.
 	collExp:= oficina verTodosExp.
 	expRecCliente:= collExp select: [:exp | exp verNumCliente = numCliente ].
-
-	Transcript show: '************ Expedientes del cliente numero: ' ,numCliente printString , ' ************';cr;cr.
-	oficina mostrarExp: expRecCliente.
 	
-	MessageBox notify: 'Se mostraron todos los expedientes ', numCliente displayString .
+	(expRecCliente isEmpty) ifTrue: [
+			MessageBox notify: 'No existe el expediente con el numero de cliente ingresado'.
+	] ifFalse:[
+		Transcript show: '************ Expedientes del cliente numero: ' ,numCliente printString , ' ************';cr;cr.
+		oficina mostrarExp: expRecCliente.
+		MessageBox notify: 'Se mostraron todos los expedientes ', numCliente displayString .
+	]
+
 ].
 
 "Listar expedientes de tipo civil indicando quien es el abogado encargado"
@@ -254,7 +258,7 @@ funcionOpcion8:= [
 		MessageBox notify: 'No hay expedientes cargados'.
 	]ifFalse:[
 	oficina mostrarExp: collExp.
-		MessageBox notify: 'Se monstraron todos los expedientes'.
+		MessageBox notify: 'Se mostraron todos los expedientes'.
 	].
 ].
 
@@ -271,7 +275,7 @@ funcionMenu:=[
 	Transcript show:'3 - Eliminar un expediente';cr.
 	Transcript show:'4 - Listado de expedientes segun su tipo';cr.
 	Transcript show:'5 - Eliminar expedientes penales del titular Sofia Coppola';cr.
-	Transcript show:'6 - Listar expedientes de un titular especifico';cr.
+	Transcript show:'6 - Listar expedientes de un cliente especifico';cr.
 	Transcript show:'7 - Listar expedientes de tipo civil';cr.
 	Transcript show:'8 - Listar todos los expedientes';cr.
 	Transcript show:'0 - Salir del programa';cr
